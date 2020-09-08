@@ -1,0 +1,316 @@
+@charset "UTF-8";
+#loginDiv{ 
+	 display: none;
+     position: absolute;
+     top: 0%;  left: 0%;  width: 100%;  height: 100%;
+     background-color:rgb(28,28,28,.7) ;  z-index:1001;
+     -moz-opacity: 0.7; filter: alpha(opacity=70);
+}
+#loginBox{
+  display: none;
+  width: 400px;
+  height: 400px;
+  margin-left:550px;
+  margin-top:150px;
+  background: #E8E8E8;
+}
+#registerBox{
+  display: none;
+  width: 400px;
+  height: 500px;
+  margin-left:550px;
+  margin-top:100px;
+  background: #E8E8E8;
+}
+#body1{
+  background: -webkit-linear-gradient(#ebecef,#FFFFFF); 
+  background: -o-linear-gradient(#ebecef,#FFFFFF); 
+  background: -moz-linear-gradient(#ebecef,#FFFFFF);
+  background: linear-gradient(#ebecef,#FFFFFF); 
+  width: 1519px;
+  height:500px; 
+  padding-top: 30px;
+}
+
+.parent {
+    position: relative;
+}
+.search {
+    width: 300px;
+    height: 40px;
+    border-radius: 18px;
+    outline: none;
+    border: 1px solid #ccc;
+    margin-left: 60px;
+    padding-left:5px;
+    position: absolute;
+    margin-top:10px;
+    background: #323334;
+}
+.btn {
+    height: 35px;
+    width: 35px;
+    position: absolute;
+    top: 12px;
+    left: 870px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+#body3{
+  background: -webkit-linear-gradient(#43CD80,#FFFFFF); 
+  background: -o-linear-gradient(#43CD80,#FFFFFF); 
+  background: -moz-linear-gradient(#43CD80,#FFFFFF); 
+  background: linear-gradient(#43CD80,#FFFFFF); 
+  width: 1519px;
+  height:350px; 
+}
+.bodyStlye{
+  background: -webkit-linear-gradient(#C1CDC1,#FFFFFF); 
+  background: -o-linear-gradient(#C1CDC1,#FFFFFF); 
+  background: -moz-linear-gradient(#C1CDC1,#FFFFFF); 
+  background: linear-gradient(#C1CDC1,#FFFFFF); 
+  width: 1519px;
+  height:350px; 
+}
+#body1Center{
+  position: relative;
+  width: 1050px;
+  height: 400px;
+  margin:0 auto;
+  border-radius: 10px;
+  box-shadow:10px 10px 10px #888888;
+}
+#navigationBar{
+  width: 262px;
+  height: 400px; 
+  border-radius:10px 0px 0px 15px;
+  background: -webkit-linear-gradient(#212226,#323339); 
+  background: -o-linear-gradient(#212226,#323339); 
+  background: -moz-linear-gradient(#212226,#323339); 
+  background: linear-gradient(#212226,#323339); 
+  float: left;
+}
+#navigationBar ul{
+  padding: 15px o;
+  margin: 9;
+  list-style: nome;
+  color: #8B8970;
+  border-right-width: 0;
+}
+#navigationBar ul li{
+  display: block;
+  height: 40px;
+  line-height: 40px;
+  padding-left: 25px;
+  margin-top:17px;
+  cursor: pointer;
+  font-size: 17px;
+  position: relative;
+}
+#navigationBar ul li span:hover{
+ color: #c81623;
+}
+.none{
+   display: none; 
+}
+#second{
+  width: 600px;
+  height:400px;
+  position: absolute;
+  border: 1px solid #f7f7f7;
+  background: #f7f7f7;
+  box-shadow: 2px 0 5px rgba(0,0,0,.3);
+  left: 262px;
+  top: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 10px;
+  z-index:100;
+}
+.second_content a{
+  font-size: 14px;
+  color: #666;
+  text-decoration: none;
+}
+.second_content dd a{
+  border-left: 1px solid #e0e0e0;
+  padding: 0 10px;
+  margin: 4px 0;
+}
+.second_content dl{
+  overflow: hidden;
+}
+.second_content dt{
+  float: left;
+  width: 70px;
+  clear: left;
+  position: relative;
+  margin-left: 5px;
+  margin-bottom: 10px;
+}
+.second_content dd{
+  float: left;
+  margin-left: 5px;
+  border-top: 1px solid #eee;
+  margin-bottom: 5px;
+}
+
+#scroll{
+  width: 788px;
+  height: 280px;
+  border-radius:0px 10px 0px 0px;
+  float: left;
+}
+#recommend{
+  width: 788px;
+  height: 120px;
+  border-radius:0px 0px 10px 0px;
+  background: #f1f2f9;
+  float: left;
+}
+#recommendBooks ul li{
+  width: 140px;
+  height: 120px;
+  float: left;
+  margin-left:25px; 
+}
+#recommendBooks ul li a img{
+  margin-left: 15px;
+  margin-top: 5px;
+}
+#body2{
+  background: -webkit-linear-gradient(#b6e2e7,#e4f4f6); 
+  background: -o-linear-gradient(#b6e2e7,#e4f4f6); 
+  background: -moz-linear-gradient(#b6e2e7,#e4f4f6); 
+  background: linear-gradient(#b6e2e7,#e4f4f6); 
+  width: 1519px;
+  height:340px; 
+}
+#body4{
+  background: -webkit-linear-gradient(#ebecef,#FFFFFF); 
+  background: -o-linear-gradient(#ebecef,#FFFFFF); 
+  background: -moz-linear-gradient(#ebecef,#FFFFFF);
+  background: linear-gradient(#ebecef,#FFFFFF); 
+  width: 1519px;
+  height:700px; 
+  padding-top: 30px; 
+}
+#bookdetail{
+  position: relative;
+  width: 1250px;
+  height: 400px;
+  margin:0 auto;
+  border-radius: 10px;
+  box-shadow:10px 10px 10px #888888;
+  background: #f9f9f7;
+  margin-bottom: 40px;
+}
+#likenessBox{
+  position: relative;
+  width: 1250px;
+  height: 200px;
+  margin:0 auto;
+  border-radius: 10px;
+  box-shadow:10px 10px 10px #888888;
+  background: #fecdf6;
+}
+#likenessBox ul li{
+	width: 210px;
+	height: 200px;
+	margin-left:30px;
+	float: left;
+}
+
+#book{
+  width: 930px;
+  height: 400px;
+  float: left;
+  border-radius:10px 0px 0px 15px;
+}
+#bookPhoto{
+  width: 250px;
+  height: 300px;
+  float: left;
+  padding-left:10px;
+  padding-top:10px;
+  border-radius:10px 0px 0px 0px;
+}
+#bookIntroduce{
+  width: 650px;
+  height: 300px;
+  float: right;
+  border-radius:10px 0px 0px 0px;
+}
+#readBox{
+  width: 930px;
+  height: 80px;
+  float: left;
+}
+#bookTile{
+  width: 650px;height: 420px;background: red
+}
+#bookTile ul li{
+  width: 100%;
+}
+#author{
+  width: 300px;
+  height: 400px;
+  background: #658071;
+  border-radius:10px 10px 10px 10px;
+  float: right;
+}
+.body2_tile{
+  position: relative;
+  background:yellow;
+  top:-20px;
+  left: 700px;
+  font-size: 25px;
+  font-weight: bold;
+  float:left;
+  color: #483D8B;
+  width: 200px;height: 50px; background-color:yellow;transform:rotate(10deg);color: #483D8B
+}
+.likenessBox_tile{
+  position: relative;
+  background:yellow;
+  top:20px;
+  left: -10px;
+  font-size: 22px;
+  line-height:50px;
+  font-weight: bold;
+  text-align:center;
+  float:left;
+  color: #483D8B;
+  width: 150px;height: 50px; background-color:yellow;transform:rotate(-23deg);color: #483D8B
+}
+.body2_content{
+	width: 1100px;
+	height: 230px;
+	float: left;
+	margin-left: 220px;
+}
+#body2content ul li{
+	width: 200px;
+	height: 230px;
+	margin-right:20px;
+	float: left;
+}
+
+#body5content ul li{
+	width: 200px;
+	height: 230px;
+	margin-right:20px;
+	float: left;
+}
+
+#body3content ul li{
+	width: 200px;
+	height: 230px;
+	margin-right:20px;
+	float: left;
+}
+
+
+
+

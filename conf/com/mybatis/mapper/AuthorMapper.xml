@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 配置SQL映射 -->
+<mapper namespace="com.readOnlineSystem.mapper.AuthorMapper">
+	
+	<select id="getAuthorVOById" resultType="com.author.vo.AuthorVO">
+	  select a.* from author a where a.authorId = #{authorId}
+	</select>
+	
+	<!-- 通过AuthorId获取该作者所著作的书籍 -->
+	<select id="getAuthorVO" resultMap="bookByAuthorId">
+	  select a.* from author a where a.authorId = #{authorId}
+	</select>
+	<resultMap type="com.author.vo.AuthorVO" id="bookByAuthorId">
+	   <id column="authorId" property="authorId"/>
+	   <result column="authorName" property="authorName"/>
+	   <result column="sex" property="sex"/>
+	   <result column="authorIntroduce" property="authorIntroduce"/>
+	   <result column="authorPicture" property="authorPicture"/>
+	   <!--  完成集合类型的联合属性的映射 
+	     方式一：collection 中ofType代表List中的JAVA类型
+	   <collection property="bookList" ofType="com.book.vo.BookVO">
+	      <id column="bookId" property="bookId"/>
+	      <result column="bookName" property="bookName"/>
+	      ....
+	   </collection>
+	   方式二：分步查询  多参数传递 column 字段用{k1=k1,k2=k2}的格式传递
+	   fetchType="eager" 表示不使用延时加载
+	   -->
+	   <collection property="bookList" 
+	       select="com.readOnlineSystem.mapper.BookMapper.getBookByAuthorId" column="authorId">
+	   </collection> 
+	</resultMap>
+	
+	
+	
+	<!-- 抽取可重用的SQL片段
+	<sql id="xxx">
+	    select id...
+	</sql> 
+    调用的时候用 <include refid="xxx"></include>
+	-->
+</mapper>
+
+
+
+
+
+
+
+
+
+

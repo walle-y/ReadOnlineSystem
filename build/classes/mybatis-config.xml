@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+   <!-- settings: 包含了多重要的设置项 -->
+   <settings>
+      <!--  映射下划线到驼峰命名 -->
+      <setting name="mapUnderscoreToCamelCase" value="true"/>
+      <!-- 开启延时加载 -->
+      <setting name="lazyLoadingEnabled" value="true"/>
+      <!-- 配置按需加载 -->
+      <setting name="aggressiveLazyLoading" value="false"/>
+   </settings>
+   
+   <!--   别名处理  
+          <typeAlias>给某个JAVA类取别名  
+          type：指定JAVA类的全类名 
+          alias:指定别名，默认为类的名称
+          <package>:为指定包下面的类去别名，且为默认别名
+   -->
+   <typeAliases> 
+     <!-- <typeAlias type="com.user.vo.UserVO" alias="UserVO"></typeAlias> -->
+     <package name="com.user.vo" />
+   </typeAliases>
+      
+	
+	<!-- SQL映射文件
+	     <package> 批量引入  SQL映射文件必须与mapper接口同名同位置
+	 
+	<mappers>
+		<package name="com.user.maper"/>
+		<package name="com.book.mapper"/>
+		<package name="com.author.mapper"/>
+	</mappers>
+	 -->
+</configuration>
+
+
+
+
+
+
+
+

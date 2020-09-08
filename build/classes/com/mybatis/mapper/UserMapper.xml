@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 配置SQL映射 -->
+<mapper namespace="com.readOnlineSystem.mapper.UserMapper">
+	<select id="getUserVOByuserID" resultType="com.user.vo.UserVO">
+		select * from user where userid = #{userid}
+	</select>
+	
+ 	<insert id="addUserVO" useGeneratedKeys="true" keyProperty="userid" parameterType="UserVO">
+	     insert into user (userName,loginName,password,createTime,userSex,remark,uploadNumber,userLevel,photo) values(#{userName},#{loginName},#{password},#{createTime},#{userSex,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR},#{uploadNumber,jdbcType=INTEGER},#{userLevel,jdbcType=VARCHAR},#{photo,jdbcType=VARCHAR})
+	</insert>
+	
+	<update id="updateUserVO">
+	     update user set userName=#{userName},password=#{password},userSex=#{userSex,jdbcType=VARCHAR},remark=#{remark,jdbcType=VARCHAR},uploadNumber=#{uploadNumber,jdbcType=INTEGER},loginName=#{loginName},userLevel=#{userLevel,jdbcType=VARCHAR},createTime=#{createTime}
+	     where userid=#{userid}
+	</update>
+	
+	<delete id="deleteUserVOById">
+	     delete from user where userid=#{userid} 
+	</delete>
+	
+	<!-- 测试多个参数传递时 -->
+	<select id="getUserVOByuserIdAndUserName" resultType="com.user.vo.UserVO">
+		select * from user where userid = #{userid} and userName=#{userName}
+	</select>
+	
+	<!-- 测试Map传递时 -->
+	<select id="getUserVOByMap" resultType="com.user.vo.UserVO">
+		select * from user where userid = #{userid} and userName=#{userName}
+	</select>
+	
+	<!-- 获取多条记录 -->
+	<select id="getUserList" resultType="com.user.vo.UserVO">
+	   select * from user
+	</select>
+	
+	<!-- 获取多条记录并用Map的形式返回 -->
+	<select id="getUserListVOByMap" resultType="com.user.vo.UserVO">
+	   select * from user
+	</select>
+	
+	<!-- 自定义映射 resultMap属性需要<resultMap> 配置
+	<select id="getUserList" resultMap="UserVO">
+	   select * from user
+	</select>
+	<resultMap type="com.user.vo.UserVO" id="UserVO">
+	   <id column="userid" property="userid"/>
+	   <result column="userName" property="userName"/>
+	</resultMap>
+	 -->
+	 
+	 <select id="getUserByUser" resultType="com.user.vo.UserVO" >
+	    select * from user where loginName = #{user.loginName} and password = #{user.password}
+	 </select>
+</mapper>
+
+
+
+
+

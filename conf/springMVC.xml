@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc 
+	                    http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+		                http://www.springframework.org/schema/beans 
+		                http://www.springframework.org/schema/beans/spring-beans.xsd
+		                http://www.springframework.org/schema/context 
+		                http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+	
+	<!-- 1.组件扫描 -->
+	<context:component-scan base-package="com.readOnlineSystem.handler" use-default-filters="false">
+	    <!-- 只扫描带有@Controller注解的方法 -->
+	    <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+	
+	<!-- 2.视图解析器 
+	     工作机制： prefix + 请求处理方法的返回值 + suffix = 物理视图路径
+	     例：/WEB-INF/views/success.jsp
+	     WEB-INF:服务器内部路径，不能直接从浏览器访问该路径下的资源，但是可以内部转发进行访问
+	-->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	    <property name="prefix" value="/WEB-INF/jsps/"></property>
+	    <property name="suffix" value=".jsp"></property>
+	</bean>
+     
+    <!-- 用于前端页面直接跳转，不需要经过Handler类处理，使用这个标签必须配置<mvc:annotation-driven/>,不然其他RequestMapping映射将失效 -->
+	<mvc:view-controller path="testViewController" view-name="success"/>
+	<mvc:annotation-driven/>
+	<!--SpringMVC用于请求静态资源 ，也必须配合 mvc:annotation-driven 使用  -->	
+	<mvc:default-servlet-handler/>
+    <mvc:resources location="/books/" mapping="/books/**"/>
+	
+	<!-- 配置文件的上传 必须要配置id 且id必须为multipartResolver -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	 	<!-- 保证与上传表单所在的Jsp页面的编码一致.  -->
+	 	<property name="defaultEncoding" value="utf-8"></property>
+	 	<property name="maxUploadSize" value="10485760"></property>
+	 </bean>
+					
+</beans>

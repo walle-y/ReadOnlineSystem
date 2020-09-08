@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 配置SQL映射 -->
+<mapper namespace="com.readOnlineSystem.mapper.BookMapper">
+	
+	<select id="getBookVOById" resultMap="BookVO">
+	  select b.* from book b where bookId = #{bookId}
+	</select>
+	<resultMap id="BookVO" type="com.book.vo.BookVO">
+	   <id column="bookId" property="bookId"/>
+	   <result column="bookId" property="bookId"/>
+	   <result column="bookName" property="bookName"/>
+	   <result column="authorId" property="authorId"/>
+	   <result column="introduce" property="introduce"/>
+	   <result column="starEvaluation" property="starEvaluation"/>
+	   <result column="clickConut" property="clickConut"/>
+	   <result column="typeIdList" property="typeIdList"/>
+	   <result column="uploadTime" property="uploadTime"/>
+	   <result column="downloadAmount" property="downloadAmount"/>
+	   <result column="bookPicture" property="bookPicture"/>
+	   <result column="likes" property="likes"/>  
+	   <!--方式一：多表查询 
+	       association 中的property 指的是BookVO中的authorVO对象，javaType指的是该对象映射的JAVA类
+		   <association property="authorVO" javaType="com.author.vo.AuthorVO">
+		     <id column="authorId" property="authorId"/>
+		     <result column="authorName" property="authorName"/>
+		     <result column="sex" property="sex"/>
+		     <result column="authorIntroduce" property="authorIntroduce"/>
+		     <result column="authorPicture" property="authorPicture"/>
+		   </association>
+		   方式二 ：分步查询	select参数传  AuthorMapper.xml中getAuthorVOById路径
+	   -->   
+	      <association property="authorVO" 
+	                select="com.readOnlineSystem.mapper.AuthorMapper.getAuthorVOById" column="authorId">	      
+	      </association>
+	</resultMap>
+	
+	<select id="getBookByAuthour" resultMap="BookVO">
+	   select a.* from book a where a.authorId = #{authorId} limit 4
+	</select>
+	
+	<select id="getBookType" resultType="com.book.vo.BookTypeVO">
+	   select a.* from booktype a 
+	</select>
+	
+	<select id="getAuthor" resultType="com.author.vo.AuthorVO">
+	   select a.* from author a 
+	</select>
+	
+	<select id="getBookByAuthorId" resultMap="BookVO">
+	   select a.* from book a where a.authorId = #{authorId}
+	</select>
+	
+	<select id="getBookByNumber" resultMap="BookVO">
+	   select a.* from book a , recommend_tb b where b.bodyId = #{bodyNumber} and a.bookId = b.bookId limit 5
+	</select>
+	
+	<select id="getBookBox" resultMap="BookCaseVO">
+	   select * from bookcase where userId = #{userId}
+	</select>
+	<resultMap id="BookCaseVO" type="com.book.vo.BookCaseVO">
+	   <id column="bookId" property="bookId"/>
+	   <id column="userId" property="userId"/>
+	   <result column="chapterNumber" property="chapterNumber"/>
+	   <association property="book" 
+	                select="com.readOnlineSystem.mapper.BookMapper.getBookVOById" column="bookId">	      
+	   </association>
+	</resultMap>
+	
+	<!-- 动态SQL -->
+	<select id="getBookBydynamicSQL" resultType="com.book.vo.BookVO">
+	     select * from book 
+	     <where>
+		     <if test="bookId != null">and bookId=#{bookId}</if>
+		     <if test="bookName!=null and bookName!=''">and bookName=#{bookName}</if>
+		     <if test="authorId != null">and authorId=#{authorId}</if>
+		     <if test="introduce!=null and introduce.trim()!=''">and introduce=#{introduce}</if>
+		     <if test="starEvaluation != null">and starEvaluation=#{starEvaluation}</if>
+		     <if test="clickConut != null">and clickConut=#{clickConut}</if>
+		     <if test="typeIdList != null">and typeIdList=#{typeIdList}</if>
+	     </where>	     	     
+	</select>
+	
+	<update id="updateBookBydynamicSQL">
+	    update book 
+	    <set>
+		     <if test="bookName!=null and bookName!=''">bookName=#{bookName} ,</if>
+		     <if test="authorId != null">authorId=#{authorId} ,</if>
+		     <if test="introduce!=null and introduce.trim()!=''">introduce=#{introduce} ,</if>
+		     <if test="starEvaluation != null">starEvaluation=#{starEvaluation} ,</if>
+		     <if test="clickConut != null">clickConut=#{clickConut} ,</if>
+		     <if test="typeIdList != null">typeIdList=#{typeIdList} ,</if>
+		     <if test="downloadAmount != null">downloadAmount=#{downloadAmount} ,</if>
+		     <if test="likes != null">likes=#{likes} ,</if>
+		     <if test="bookPicture != null">bookPicture=#{bookPicture}</if>
+	    </set>
+	    where bookId=#{bookId}
+	</update>
+	 
+	 <select id="getBookByChoose" resultType="com.book.vo.BookVO">
+	     select * from book where
+	     <choose>
+	        <when test="bookId != null">bookId=#{bookId}</when>
+	        <when test="bookName != null and bookName != ''">bookName=#{bookName}</when>
+	        <when test="authorId != null">authorId=#{authorId}</when>
+	        <when test="typeIdList != null">typeIdList=#{typeIdList}</when>
+	        <when test="starEvaluation != null">starEvaluation=#{starEvaluation}</when>
+	        <when test="clickConut != null">clickConut=#{clickConut}</when>
+	        <otherwise>1=1 limit 0,10</otherwise>
+	     </choose>
+	 </select>
+	 
+	 <select id="getBookByBookIds" resultType="com.book.vo.BookVO">
+	    <!-- foreach 标签 collection：指定迭代的集合
+	                item：当前从集合中迭代出的元素
+	                open：指定一个开始字符
+	                close：指定一个结束字符
+	                separator：元素与元素之间的分割符 -->
+	    select * from book where bookId in
+	    <foreach collection="BookIds" item="currentBookId" open="(" close=")" separator=",">
+	          #{currentBookId}
+	    </foreach>  
+	 </select>
+	 
+	 <select id="batchAdd" resultType="com.book.vo.BookVO">
+	     insert into book values
+	     <foreach collection="books" open="(" close=")" item="book" separator=",">
+	        <include refid="bookValue"></include>
+	     </foreach>
+	 </select>
+	 
+	 <select id="getBookByName" resultMap="BookVO">
+	     select * from book where bookName like ${name} 
+	 </select>
+	 	 
+	 <select id="getBookByType" resultMap="BookVO">
+	     select * from book where typeIdList like ${bookType} 
+	 </select>	 
+	 	 
+	 <select id="getBookTypeById" resultType="String">
+	     select typeName from booktype where typeId = #{id} 
+	 </select>
+	 
+	 <select id="getBookTypeId" resultType="Integer">
+	     select typeId from booktype where typeName = #{typeName} 
+	 </select>
+	 
+	 <select id="getChapterList" resultType="com.book.vo.ChapterVO">
+	     select * from chapter where bookId = #{bookId} 
+	 </select>
+	 
+	 <select id="getChapter" resultType="com.book.vo.ChapterVO">
+	     select * from chapter where bookId = #{bookId} and chapterNumber = #{chapterNumber}
+	 </select>
+	 
+	 <select id="evaluationList" resultMap="EvaluationVO">
+	     select * from chapterevaluation where bookId = #{bookId} and chapterNumber = #{chapterNumber}
+	 </select>
+	 <resultMap type="com.book.vo.EvaluationVO" id="EvaluationVO">
+	   <id column="evaluationId" property="evaluationId"/>
+	   <result column="bookId" property="bookId"/>
+	   <result column="userId" property="userId"/>
+	   <result column="evaluationContent" property="evaluationContent"/>
+	   <result column="chapterNumber" property="chapterNumber"/>
+	   <result column="evaluationTime" property="evaluationTime"/>
+	   <result column="likes" property="likes"/>
+	   <result column="likeList" property="likeList"/>	   	   
+	   <association property="userVO" 
+	                select="com.readOnlineSystem.mapper.UserMapper.getUserVOByuserID" column="userId">	      
+	   </association>	
+	   <collection property="revertList" 
+	       select="com.readOnlineSystem.mapper.BookMapper.getRevertListById" column="evaluationId">
+	   </collection>    
+	</resultMap>
+	 
+	 <select id="getRevertListById" resultMap="RevertVO">
+	     select * from revert where evaluationId = #{evaluationId}
+	 </select>
+	 <resultMap type="com.book.vo.RevertVO" id="RevertVO">
+	   <id column="revertId" property="revertId"/>
+	   <result column="userId" property="userId"/>
+	   <result column="evaluationId" property="evaluationId"/>
+	   <result column="revertContent" property="revertContent"/>
+	   <result column="revertTime" property="revertTime"/>
+	   <result column="likes" property="likes"/>
+	   <result column="likeList" property="likeList"/>
+	   <association property="userVO" 
+	                select="com.readOnlineSystem.mapper.UserMapper.getUserVOByuserID" column="userId">	      
+	   </association>
+	 </resultMap>
+	   
+	 <insert id="addEvaluation" useGeneratedKeys="true" keyProperty="evaluationId" parameterType="com.book.vo.EvaluationVO">
+	     insert into chapterevaluation (userId,bookId,chapterNumber,evaluationTime,evaluationContent,likes,likeList) values(#{userId},#{bookId},#{chapterNumber},#{evaluationTime},#{evaluationContent,jdbcType=VARCHAR},#{likes,jdbcType=INTEGER},#{likeList,jdbcType=VARCHAR})
+	</insert>
+	   
+	 <update id="modEvaluation">
+	     update chapterevaluation set likeList = #{likeList} , likes = #{likes}  where evaluationId=#{evaluationId}
+	 </update>  
+	   
+	 <select id="getEvaluationById" resultMap="EvaluationVO">
+	     select * from chapterevaluation where evaluationId = #{evaluationId}
+	 </select>  
+	  
+	  <select id="getRevertById" resultMap="RevertVO">
+	     select * from revert where revertId = #{revertId}
+	 </select> 
+	   
+	  <update id="modRevert">
+	     update revert set likeList = #{likeList} , likes = #{likes}  where revertId=#{revertId}
+	 </update>  
+	   
+	 <insert id="addRevert" useGeneratedKeys="true" keyProperty="revertId" parameterType="com.book.vo.ChapterVO">
+	     insert into revert (revertId,userId,evaluationId,revertTime,revertContent,likes,likeList) values(#{revertId},#{userId},#{evaluationId},#{revertTime},#{revertContent,jdbcType=VARCHAR},#{likes,jdbcType=INTEGER},#{likeList,jdbcType=VARCHAR})
+	</insert>
+	   
+	 <delete id="removeBookInBox">
+	     delete from bookcase where userId = #{userId} and bookId = #{bookId}
+	 </delete>
+	   
+	 <insert id="addBookInBox" keyProperty="userId,bookId"  parameterType="com.book.vo.EvaluationVO">
+	     insert into bookcase (userId,bookId,chapterNumber) values(#{userId},#{bookId},'1')
+	</insert>
+	 
+	 <sql id="bookValue">
+	    #{book.bookId},#{book.bookName},#{book.authorId},#{book.introduce,jdbcType=VARCHAR},#{book.starEvaluation},
+	    #{book.clickConut},#{book.typeIdList,jdbcType=VARCHAR},#{book.uploadTime},#{book.downloadAmount},
+	    #{book.bookPicture,jdbcType=VARCHAR}, #{book.likes}
+	</sql> 
+</mapper>
+
+
+
+
+
